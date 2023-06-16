@@ -1,8 +1,8 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class IndexNames {
 
@@ -13,18 +13,9 @@ public class IndexNames {
     }
 
     public static String formatOddIndexNames(List<String> names) {
-        List<String> formattedNames = new ArrayList<>();
-        Iterator<String> iterator = names.iterator();
-        int index = 1;
-
-        while (iterator.hasNext()) {
-            String name = iterator.next();
-            if (index % 2 != 0) {
-                formattedNames.add(index + ". " + name);
+        return IntStream.range(0, names.size())
+                .filter(i -> i % 2 == 0)
+                .mapToObj(i -> (i + 1) + ". " + names.get(i))
+                .collect(Collectors.joining(", "));
             }
-            index++;
-        }
-
-        return String.join(", ", formattedNames);
-    }
 }
